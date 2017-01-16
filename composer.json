@@ -6,7 +6,6 @@
     "sms",
     "api"
   ],
-  "type": "phpsms extension",
   "license": "BSD-3-Clause",
   "support": {
     "source": "https://github.com/zacksleo/phpsms"
