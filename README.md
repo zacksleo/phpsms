@@ -1,7 +1,7 @@
 # phpsms
 互亿无线短信接口, 基于phpsms
 
-## 详细文档见 [文档](https://github.com/toplan/phpsms)
+## 详细文档见 [PhpSms文档](https://github.com/toplan/phpsms/blob/master/README.md)
 
 ## 用法示例
 ```
