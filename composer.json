@@ -1,0 +1,30 @@
+{
+  "name": "zacksleo/phpsms",
+  "description": "sms agent extension for phpsms",
+  "keywords": [
+    "php",
+    "sms",
+    "api"
+  ],
+  "type": "phpsms extension",
+  "license": "BSD-3-Clause",
+  "support": {
+    "source": "https://github.com/zacksleo/phpsms"
+  },
+  "authors": [
+    {
+      "name": "zacksleo",
+      "email": "zacks.leo@gmail.com"
+    }
+  ],
+  "require": {
+    "toplan/phpsms": "^1.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "zacksleo\\PhpSms\\": [
+        "agents/"
+      ]
+    }
+  }
+}
