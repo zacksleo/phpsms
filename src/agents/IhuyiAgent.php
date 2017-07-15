@@ -30,6 +30,15 @@ class IhuyiAgent extends Agent
 
     public function sendContentSms($to, $content)
     {
+        $to = ltrim($to, '+');
+        //如果是中国的手机号，去掉86，并使用国内短信网关
+        if (preg_match('/^86\s[1][3578][0-9]{9}$/', $to)) {
+            $to = substr($to, -11, 11);
+        } elseif (preg_match('/^[1][3578][0-9]{9}$/', $to)) {
+            $this->sendUrl = 'http://106.ihuyi.cn/webservice/sms.php?method=Submit';
+        } else {
+            $this->sendUrl = 'http://api.isms.ihuyi.com/webservice/isms.php?method=Submit';
+        }
         $params = [
             'mobile' => $to,
             'content' => $content,
