@@ -15,7 +15,7 @@ use Toplan\PhpSms\Agent;
  */
 class IhuyiAgent extends Agent
 {
-    public function sendSms($to, $content, $tempId, array $tempData)
+    public function sendSms($to, $content = null, $tempId = null, array $tempData = [], array $params = [])
     {
         $this->sendContentSms($to, $content);
     }
@@ -50,7 +50,7 @@ class IhuyiAgent extends Agent
     {
         $sendUrl = $this->sendUrl ?: 'http://106.ihuyi.cn/webservice/sms.php?method=Submit';
         $params = $this->createParams($params);
-        $result = $this->curl($sendUrl, $params, true);
+        $result = $this->curlPost($sendUrl, $params);
         $this->setResult($result);
     }
 

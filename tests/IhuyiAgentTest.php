@@ -1,4 +1,5 @@
 <?php
+
 namespace zacksleo\PhpSms\tests;
 
 use Toplan\PhpSms\Agent;
@@ -10,17 +11,17 @@ use Toplan\PhpSms\Sms;
  */
 class IhuyiAgentTest extends \PHPUnit_Framework_TestCase
 {
-    protected static $sms=null;
+    protected static $sms = null;
 
 
     public static function setUpBeforeClass()
     {
         Sms::cleanScheme();
         Sms::scheme('Ihuyi', [
-              '100 backup',
-              'agentClass' => 'zacksleo\PhpSms\IhuyiAgent'
-          ]);
-        self::$sms=Sms::make();
+            '100 backup',
+            'agentClass' => 'zacksleo\PhpSms\IhuyiAgent'
+        ]);
+        self::$sms = Sms::make();
     }
 
     public function testMakeSms()
@@ -74,7 +75,7 @@ class IhuyiAgentTest extends \PHPUnit_Framework_TestCase
         self::$sms->template('Luosimao', '123');
         $smsData = self::$sms->all();
         $this->assertEquals([
-        'Luosimao' => '123',
+            'Luosimao' => '123',
         ], $smsData['templates']);
         self::$sms->template([
             'Luosimao' => '1234',
@@ -111,11 +112,11 @@ class IhuyiAgentTest extends \PHPUnit_Framework_TestCase
     {
         $to = 13780185250;
         $content = "内容";
-        $tempId=1;
+        $tempId = 1;
         $tempData = [
             'msg' => 'msg',
         ];
-        $result = self::$sms->send($to,$content,$tempId,$tempData);
+        $result = self::$sms->send($to, $content, $tempId, $tempData);
         $this->assertArrayHasKey('success', $result);
         $this->assertArrayHasKey('time', $result);
         $this->assertArrayHasKey('logs', $result);
@@ -143,8 +144,6 @@ class IhuyiAgentTest extends \PHPUnit_Framework_TestCase
     {
         $result = self::$sms->agent('Ihuyi')->send();
         $this->assertFalse($result['success']);
-     //   $this->assertCount(1, $result['Ihuyi']);
-     //   $this->assertEquals('Ihuyi', $result['logs'][0]['driver']);
     }
 
     public function testVoice()
@@ -172,7 +171,5 @@ class IhuyiAgentTest extends \PHPUnit_Framework_TestCase
 
         $result = self::$sms->send(true);
         $this->assertFalse($result['success']);
-      //  $this->assertContent(1,$result['Ihuyi']);
-      //  $this->assertEquals('Ihuyi',$result['Ihuyi'][0]['driver']);
     }
 }
