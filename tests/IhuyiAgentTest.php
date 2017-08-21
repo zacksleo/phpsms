@@ -5,11 +5,12 @@ namespace zacksleo\PhpSms\tests;
 use Toplan\PhpSms\Agent;
 use zacksleo\PhpSms\IhuyiAgent;
 use Toplan\PhpSms\Sms;
+use PHPunit\Framework\TestCase;
 
 /**
  *
  */
-class IhuyiAgentTest extends \PHPUnit_Framework_TestCase
+class IhuyiAgentTest extends TestCase
 {
     protected static $sms = null;
 
@@ -171,5 +172,43 @@ class IhuyiAgentTest extends \PHPUnit_Framework_TestCase
 
         $result = self::$sms->send(true);
         $this->assertFalse($result['success']);
+    }
+
+    public function testSendSmsMock()
+    {
+        $stub = $this->createMock(IhuyiAgent::class);
+        $map = [
+            ['18888888888', 'message-content'],
+            ['17002018000', 'message-content'],
+            ['17002018000', 'valid-content'],
+        ];
+        $map[0][2] = <<<XML
+<?xml version="1.0" encoding="utf-8"?>
+<SubmitResult xmlns="http://106.ihuyi.cn/">
+    <code>4030</code>
+    <msg>系统黑名单号码</msg>
+    <smsid>0</smsid>
+</SubmitResult>
+XML;
+        $map[1][2] = <<<XML
+<?xml version="1.0" encoding="utf-8"?>
+<SubmitResult xmlns="http://106.ihuyi.cn/">
+    <code>4072</code>
+    <msg>你提交过来的短信内容必须与报备过的模板格式相匹配</msg>
+    <smsid>0</smsid>
+</SubmitResult>
+XML;
+        $map[2][2] = <<<XML
+<?xml version="1.0" encoding="utf-8"?>
+<SubmitResult xmlns="http://106.ihuyi.cn/">
+    <code>2</code>
+    <msg>提交成功</msg>
+    <smsid>15033102784415801328</smsid>
+</SubmitResult>
+XML;
+        $stub->method('curl')->will($this->returnValueMap($map));
+        $this->assertEquals($map[0][2], $stub->sendSms($map[0][0], $map[0][1]));
+        $this->assertEquals($map[1][2], $stub->sendSms($map[1][0], $map[1][1]));
+        $this->assertEquals($map[2][2], $stub->sendSms($map[2][0], $map[2][1]));
     }
 }
