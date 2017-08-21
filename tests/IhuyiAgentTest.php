@@ -109,7 +109,13 @@ class IhuyiAgentTest extends \PHPUnit_Framework_TestCase
 
     public function testSendSms()
     {
-        $result = self::$sms->send();
+        $to = 13780185250;
+        $content = "内容";
+        $tempId=1;
+        $tempData = [
+            'msg' => 'msg',
+        ];
+        $result = self::$sms->send($to,$content,$tempId,$tempData);
         $this->assertArrayHasKey('success', $result);
         $this->assertArrayHasKey('time', $result);
         $this->assertArrayHasKey('logs', $result);
