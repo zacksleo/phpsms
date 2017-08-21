@@ -19,11 +19,22 @@
   "require": {
     "toplan/phpsms": "^1.8"
   },
+  "require-dev": {
+    "fzaninotto/faker": "^1.6",
+    "phpunit/phpunit": "4.8.1"
+  },
   "autoload": {
     "psr-4": {
       "zacksleo\\PhpSms\\": [
         "src/agents/"
-      ]
+      ],
+      "zacksleo\\tests\\": "tests"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
 }
