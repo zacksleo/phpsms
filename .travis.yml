@@ -1,0 +1,32 @@
+language: php
+
+matrix:
+  fast_finish: true
+
+php:
+  - 7.1
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - vendor
+
+services:
+  - mysql
+
+install:
+  - travis_retry composer self-update
+  - composer config -g github-oauth.github.com 5125faee43aee49964bdef63ebd8f9f3bc5ad0a9
+  - travis_retry composer install --prefer-dist --no-interaction
+  - travis_retry mysql -e 'CREATE DATABASE test;'
+
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --prefer-source --dev
+
+script:
+  - ./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
