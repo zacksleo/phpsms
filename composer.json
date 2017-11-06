@@ -17,7 +17,7 @@
     }
   ],
   "require": {
-    "toplan/phpsms": "^1.6"
+    "toplan/phpsms": "^1.7.2"
   },
   "autoload": {
     "psr-4": {
